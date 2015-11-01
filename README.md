@@ -6,9 +6,9 @@ To minimize costs, the landlord must be able to identify which buildings are ine
 
 Current Results and Discussion
 ==============================
-In the last 3 years, the monthly utility bill for a given rental location was observed to be approximately twice as high in the peak usage months in 2013 and 2014 compared to 2012 (see plot 1: https://github.com/marchdf/utility_analysis/blob/master/plots/utilities.png). The property management company does not know whether this is due to tenant variation, new building inefficiencies, increased gas prices, or worse weather conditions in 2013 and 2014. 
+In the last 3 years, the monthly utility bill for a given rental location was approximately twice as high in the peak usage months in 2013 and 2014 compared to 2012 (see plot 1: https://github.com/marchdf/utility_analysis/blob/master/plots/utilities.png). The property management company does not know whether this is due to tenant variation, new building inefficiencies, increased gas prices, or worse weather conditions in 2013 and 2014. 
 
-The first step to identify the issues is to adjust the utility bill data to take into account gas rate price fluctuations. DTE provides the monthly price of gas for a hundred cubic feet (ccf). The monthly gas usage can be found by dividing the utility bill by the gas rate per ccf. The monthly gas usage is a good indicator of building energy use. 
+The first step to identify the issues is to account for gas rate price fluctuations. DTE Energy provides the monthly price of gas for a hundred cubic feet (ccf). The monthly gas usage can be found by dividing the utility bill by the gas rate per ccf. The monthly gas usage is a good indicator of building energy use. 
 
 The next step is to control for weather variations as very cold winters could be driving the usage increase. While average outside temperature could be used to do this, a better measure of temperature effects on heating is the heating degree day (hdd). For each month, calculate the sum of the difference between a base temperature (usually 65F) and the average daily temperature. This measures the monthly cumulative degrees below a base temperature and is a good indicator of the severity of the cold weather. 
 
