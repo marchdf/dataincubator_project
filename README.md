@@ -10,13 +10,16 @@ In the last 3 years, the monthly utility bill for a given rental location was ob
 
 The first step to identify the issues is to adjust the utility bill data to take into account gas rate price fluctuations. DTE provides the monthly price of gas for a hundred cubic feet (ccf). The monthly gas usage can be found by dividing the utility bill by the gas rate per ccf. The monthly gas usage is a good indicator of building energy use. 
 
+The next step is to control for weather variations as very cold winters could be driving the usage increase. While average outside temperature could be used to do this, a better measure of temperature effects on heating is the heating degree day (hdd). For each month, calculate the sum of the difference between a base temperature (usually 65F) and the average daily temperature. This measures the monthly cumulative degrees below a base temperature and is a good indicator of the severity of the cold weather. 
 
-
+Plotting the gas usage as a function of heating degree days for each month and year (https://github.com/marchdf/utility_analysis/blob/master/plots/HDDvsC.png where the colors indicate different years and the numbers in the symbol correspond to the month of the year) illustrates the differences between 2012 and 2013/2014. Linear fits of the data shows the different trend among the years. At comparable heating degree day values, the gas usage for 2013/2014 was much higher than in 2012. This allows us to conclude that the weather was not the main driver for the gas usage increases observed in 2013/2014. 
 
 
 Further Scope
 =============
-Utility bills of individual rental properties is confidential and their access is limited. In this context, I have restricted the analysis to my own property in Ann Arbor, MI. The dataset for this particular analysis is therefore small. The weather data scrapped from WeatherUnderground is larger but still just restricted to one location. This could easily be scaled to a larger area depending on the region of interest.
+Unfortunately the data does not enable us to say whether this difference is due to tenant changes or new building inefficiencies (for example, old furnace and new building leaks). Working with property management companies for this project would allow us to control for these variables as well.
+
+Utility bills of individual rental properties is confidential and their access is limited. In this context, I have restricted the analysis to my own property in Ann Arbor, MI. The dataset for this particular analysis is therefore small. The weather data scrapped from WeatherUnderground is larger but still just restricted to one location. This could easily be scaled to a larger area depending on the region of interest. Finally, yearly tenant variation for my residence was not available publicily.
 
 Sources
 =======
