@@ -10,4 +10,4 @@ Obtaining utility bills for individual rental properties is difficult so I have 
 
 Sources
 =======
-The utility rates are taken from DTE's website and utility bills are my own. Weather data is scrapped from WeatherUnderground with the Python script.
+The utility rates are taken from DTE's website (https://www2.dteenergy.com/wps/wcm/connect/902be969-c10b-4232-9a85-f878c8f98093/rateCard.pdf?MOD=AJPERES) and utility bills are my own. Weather data is scrapped from WeatherUnderground with the Python script.

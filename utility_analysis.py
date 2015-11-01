@@ -8,12 +8,6 @@
 #
 # How is it related to our utility bill and gas usage?
 #
-# TODO:
-#   - color code all data by tenant year (sept-aug)
-#   - maybe the min min temp instead of avg min temp
-#   - plot Y = ccf/temp(kelvin) to get Y vs month of tenant year
-#   - plot Y vs tenant year (scatter plot with month on marker)
-#
 #==============================================================
 __author__ = 'marchdf'
 def usage():
@@ -203,7 +197,8 @@ def parse_money_data(fname):
 
     try:
         reader = csv.reader(f)
-        reader.next() # skip first line
+        # skip comments line
+        reader.next()
         for cnt, row in enumerate(reader):
             dates.append(datetime.strptime(row[0], format))
             utilities.append(row[1])
@@ -262,6 +257,7 @@ def x_y_scatter(x,y,months,add_fit=None):
             idx = np.nonzero(Y)
             X = X[idx]
             Y = Y[idx]
+            print X, Y
             fit = np.polyfit(X,Y,1)
             fit_fn = np.poly1d(fit)
             xx = np.linspace(X.min(),X.max(),100)
@@ -291,9 +287,9 @@ def save_figures(fignames):
     # Save all the figures in different formats
     for cnt,figname in enumerate(fignames):
         pl.figure(cnt)
-        pl.savefig(figname+'.pdf',format='pdf')
-        pl.savefig(figname+'.png',format='png')
-        #pl.savefig(figname+'.eps',format='eps')
+        pl.savefig(plotdir+figname+'.pdf',format='pdf')
+        pl.savefig(plotdir+figname+'.png',format='png')
+        #pl.savefig(plotdir+figname+'.eps',format='eps')
 
 
 #================================================================================
@@ -302,9 +298,16 @@ def save_figures(fignames):
 #
 #================================================================================
 
-# default directory to save data
+# default directory to save data (create it if necessary)
 datadir = './daily_avg/'
+if not os.path.exists(datadir):
+    os.makedirs(datadir)
 
+# directory to save plots
+plotdir = './plots/'
+if not os.path.exists(plotdir):
+    os.makedirs(plotdir)
+    
 # Setup the dates
 today = datetime.today()
 dt_end = today;
@@ -372,7 +375,6 @@ for k in range(0,delta_years+1):
 #
 #================================================================================
 fname = 'utilities.csv'
-#fname = 'utilities_first_year.csv'
 utility_months, utilities, gas_rates = parse_money_data(fname)
 
 # get the ccf used
@@ -398,7 +400,7 @@ sorted_hdd        = np.zeros([tenant_years,12])
 
 # loop on all the years
 for k, year in enumerate(range(year_start,year_end+1)):
-    
+
     # temporally store the months in a given tenant year
     tmp_months = []
     storing_cnt = 0
@@ -420,6 +422,7 @@ for k, year in enumerate(range(year_start,year_end+1)):
 
     # append to the sorted months
     sorted_months.append(sorted(tmp_months))
+
     
 # Get the ccf per degree Kelvin
 sorted_K = (sorted_avg_temp-32)/1.8 + 273.15
@@ -490,8 +493,8 @@ pl.gca().xaxis.set_ticks_position('bottom')
 pl.gca().yaxis.set_ticks_position('left')
 
 # save
-pl.savefig('TvsC.pdf',format='pdf')
-pl.savefig('TvsC.png',format='png')
+pl.savefig(plotdir+'TvsC.pdf',format='pdf')
+pl.savefig(plotdir+'TvsC.png',format='png')
 
 #
 # VS HDD
@@ -519,8 +522,8 @@ pl.gca().xaxis.set_ticks_position('bottom')
 pl.gca().yaxis.set_ticks_position('left')
 
 # save
-pl.savefig('HDDvsC.pdf',format='pdf')
-pl.savefig('HDDvsC.png',format='png')
+pl.savefig(plotdir+'HDDvsC.pdf',format='pdf')
+pl.savefig(plotdir+'HDDvsC.png',format='png')
 
 #================================================================================
 #
@@ -550,8 +553,8 @@ pl.setp(pl.gca().get_xmajorticklabels(),fontsize=18,fontweight='bold');
 pl.setp(pl.gca().get_ymajorticklabels(),fontsize=18,fontweight='bold');
 
 # save
-pl.savefig('usage_per_temp.pdf',format='pdf')
-pl.savefig('usage_per_temp.png',format='png')
+pl.savefig(plotdir+'usage_per_temp.pdf',format='pdf')
+pl.savefig(plotdir+'usage_per_temp.png',format='png')
 
 
 #================================================================================
@@ -582,8 +585,8 @@ pl.setp(pl.gca().get_xmajorticklabels(),fontsize=18,fontweight='bold');
 pl.setp(pl.gca().get_ymajorticklabels(),fontsize=18,fontweight='bold');
 
 # save
-pl.savefig('usage_per_hdd.pdf',format='pdf')
-pl.savefig('usage_per_hdd.png',format='png')
+pl.savefig(plotdir+'usage_per_hdd.pdf',format='pdf')
+pl.savefig(plotdir+'usage_per_hdd.png',format='png')
 
 
 #show()
